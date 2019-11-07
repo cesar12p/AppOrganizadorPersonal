@@ -1,0 +1,22 @@
+#imgLogo{
+    width: 100%;
+    height: auto;
+}
+#colIzq{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+#Titulo{
+    font-size:5vw;
+    color: white;
+}
+#Subtitulo{
+    font-size:3vw;
+}
+#Texto{
+    font-size:2vw;
+}
+#fondo{
+    background:#7DCEA0  ;
+}

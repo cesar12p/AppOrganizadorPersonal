@@ -50,7 +50,7 @@ class MainPage(Handler):
     def get(self):
         fondo="bg-info"
         msg=""
-        self.render("index.html",fondo=fondo, error=msg)
+        self.render("index.html",fondo=fondo, msg=msg)
     def post(self):
         global template_values
         user = self.request.get('user')
@@ -61,7 +61,7 @@ class MainPage(Handler):
         fondo="bg-warning"
         if pw == '' or user == '':
             msg = "Error Ingresa tu usuario y password"
-            self.render("index.html", error=msg ,fondo=fondo)
+            self.render("index.html", msg=msg ,fondo=fondo)
         else:
             consulta=Objeto_Usuario.query(ndb.AND(Objeto_Usuario.username==user, Objeto_Usuario.password==pw )).get()
             if consulta is not None:
@@ -83,12 +83,11 @@ class MainPage(Handler):
                 logging.info('POST consulta=' + str(consulta))
                 fondo="bg-danger"
                 msg = 'El usuario o el password son Incorectos  Intenta de nuevo'
-                self.render("index.html", error=msg, fondo=fondo)
+                self.render("index.html", msg=msg, fondo=fondo)
 
 class Registrar(Handler):
     def get(self):
-        fondo="bg-dark"
-        self.render("Registro.html",fondo=fondo)
+        self.render("Registro.html")
 
     def post(self):
         user = self.request.get('user')
@@ -98,9 +97,8 @@ class Registrar(Handler):
         cuentakey = cuenta.put()
         cuenta_user=cuentakey.get()
         if cuenta_user == cuenta:
-            msj = "Fuiste registrado con exito"
-            fondo="bg-success"
-            self.render("Registro.html",fondo=fondo, msj=msj)
+            msg = "Registrado"
+            self.render("index.html", msg=msg)
 class Salir(Handler):
     def get(self):
         if self.session.get('user'):

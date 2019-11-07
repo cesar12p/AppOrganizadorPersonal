@@ -7,18 +7,20 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <title>Hello, world!</title>
+  <link href="/static/css/estilos.css" rel="stylesheet" type="text/css">
 </head>
 
 <body class="p-3 mb-2 bg-info text-white">
-  <br>
-  <br>
-  <h1 class="text-center text-white">Login</h1>
+
+  <h1 id="Titulo" class="text-center">Login</h1>
   <div class="container">
     <div class="row">
-      <div class="col">
+      <div id="colIzq" class="col-6">
+        <img id="imgLogo" src="/static/img/Name.png">
+        <h4 class="text-center .bg-gradient-success">Task, Events & Directory</h4>
       </div>
-      <div class="col-6 p-3 mb-2 alert-dark text-body">
-        <h2 class="text-center">Usuario</h2>
+      <div class="col-6 alert-dark text-body">
+        <h5 id="Subtitulo" class="text-center">Usuario</h5>
         <form action="/click_login" method="post">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -28,7 +30,7 @@
             <input type="text" name="user" class="form-control" placeholder="Ingrese su Usuario" aria-label="Username"
               aria-describedby="basic-addon1">
           </div>
-          <h2 class="text-center">Password</h2>
+          <h2 id="Subtitulo" class="text-center">Password</h2>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text bg-secondary" id="basic-addon1"><img src="static/img/key.png" width="25"
@@ -37,28 +39,35 @@
             <input type="password" name="contra" class="form-control" placeholder="Ingrese su contraseña"
               aria-label="Username" aria-describedby="basic-addon1">
           </div>
-          <h5>¿Aun no tienes una Cuenta? <a class="text-primary" href="/registrame">Regristrate</a></h5>
+          <h5 id="Texto">¿Aun no tienes una Cuenta? <a id="Texto" class="text-primary"
+              href="/registrame">Regristrate</a></h5>
           <div class="text-center">
-            <input type="submit" class="btn btn-success"></input>
+            <button type="submit" class="btn btn-success">Ingresar</button>
           </div>
+          <br>
         </form>
       </div>
       <div class="col">
       </div>
     </div>
     <div class="row">
-        <div class="col">
+      <div class="col">
 
-        </div>
-        <div class="col-6 p-3 mb-2 {{fondo}} text-white">
-            <h1>
-                {{error}}
-            </h1>
-        </div>
-        <div class="col">
-        </div>
+      </div>
+      <div id="Texto" class="col-6  {{fondo}} text-white">
+
+        {% if msg=="Registrado" %}
+        <script src="/static/js/scrip.js"></script>
+        {%else%}
+        <h1>
+          {{msg}}
+        </h1>
+        {%endif%}
+      </div>
+
     </div>
   </div>
+
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
