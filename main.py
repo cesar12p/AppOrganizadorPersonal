@@ -16,8 +16,6 @@ template_values={}
 class Objeto_Usuario(ndb.Model):
     username = ndb.StringProperty()
     password = ndb.StringProperty()
-    ganadas = ndb.IntegerProperty()
-    perdidas = ndb.IntegerProperty()
 
 def render_str(template, **params):
     t = jinja_env.get_template(template)
@@ -68,15 +66,11 @@ class MainPage(Handler):
                 logging.info('POST consulta=' + str(consulta))
                 #Vinculo el usuario obtenido de mi datastore con mi sesion.
                 self.session['user'] = consulta.username
-                self.session['ganadas']=consulta.ganadas
-                self.session['perdidas']=consulta.perdidas
                 logging.info("%s just logged in" % user)
                 global userg
                 userg=user
                 template_values={
-                    'user':self.session['user'],
-                    'ganadas':self.session['ganadas'],
-                    'perdidas':self.session['perdidas']
+                    'user':self.session['user']
                 }
                 self.render("Bienvenido.html", user=template_values)
             else:
@@ -93,7 +87,7 @@ class Registrar(Handler):
         user = self.request.get('user')
         pw = self.request.get('contra')
         pw=SHA256.new(pw).hexdigest()
-        cuenta = Objeto_Usuario(username=user, password = pw, ganadas=0, perdidas=0)
+        cuenta = Objeto_Usuario(username=user, password = pw)
         cuentakey = cuenta.put()
         cuenta_user=cuentakey.get()
         if cuenta_user == cuenta:
