@@ -9,13 +9,21 @@ from webapp2_extras import sessions
 from Crypto.Hash import SHA256
 userg=""
 resp = ""
+consulta=""
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
                                autoescape=True)
 template_values={}
+nota_values={}
+class Objeto_Nota(ndb.Model):
+    Titulo = ndb.StringProperty()
+    Descripcion = ndb.StringProperty()
 class Objeto_Usuario(ndb.Model):
     username = ndb.StringProperty()
     password = ndb.StringProperty()
+    email=ndb.StringProperty()
+    nota=ndb.StructuredProperty(Objeto_Nota, repeated=True)
+ 
 
 def render_str(template, **params):
     t = jinja_env.get_template(template)
@@ -51,6 +59,8 @@ class MainPage(Handler):
         self.render("index.html",fondo=fondo, msg=msg)
     def post(self):
         global template_values
+        global nota_values
+        global consulta
         user = self.request.get('user')
         pw = self.request.get('contra')
         pw=SHA256.new(pw).hexdigest()
@@ -70,7 +80,7 @@ class MainPage(Handler):
                 global userg
                 userg=user
                 template_values={
-                    'user':self.session['user']
+                    'user':self.session['user'
                 }
                 self.render("Bienvenido.html", user=template_values)
             else:
@@ -82,7 +92,6 @@ class MainPage(Handler):
 class Registrar(Handler):
     def get(self):
         self.render("Registro.html")
-
     def post(self):
         user = self.request.get('user')
         pw = self.request.get('contra')
@@ -93,6 +102,19 @@ class Registrar(Handler):
         if cuenta_user == cuenta:
             msg = "Registrado"
             self.render("index.html", msg=msg)
+class Nota(Handler):
+    def post(self):
+        global consulta
+        Titulo = self.request.get('Titulo')
+        Descripcion = self.request.get('Descripcion')
+        newNota=Objeto_Nota(Titulo=Titulo,Descripcion=Descripcion)
+        consulta.nota.append(newNota)
+        #consulta.username="2"
+        consulta.put()
+        u=consulta.nota[0]
+        
+        self.render("Mostrar.html",u=u)
+
 class Salir(Handler):
     def get(self):
         if self.session.get('user'):
@@ -110,5 +132,6 @@ config['webapp2_extras.sessions'] = {
 app = webapp2.WSGIApplication([('/', MainPage),
                                ('/click_login', MainPage),
                                ('/registrame',Registrar),
+                               ('/AddNota',Nota),
                                ('/salir',Salir)
                                ], debug=True, config=config)

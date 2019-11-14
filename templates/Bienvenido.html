@@ -11,30 +11,32 @@
 </head>
 
 <body class="p-3 mb-2 bg-info text-white">
-		{% if user.user %}	
-		<nav class="navbar navbar-light bg-info">
-				<a class="navbar-brand" href="/salir">
-				  <img src="/static/img/salir.png" width="30" height="30" alt="">
-				</a>
-			  </nav>
-			  {% endif %}
-	
+	{% if user.user %}
+	<nav class="navbar navbar-light bg-info">
+		<a class="navbar-brand" href="/salir">
+			<img src="/static/img/salir.png" width="30" height="30" alt="">
+		</a>
+	</nav>
+	{% endif %}
+
 	<div class="container">
 		<div class="row">
 			<div class="col-2">
 				<!-- Columna izquierda-->
 			</div>
 			<div class="col-8 text-center alert-dark">
-					{% if user.user %}	
-				<h1 class="display-3">
-					Bienvenid@ {{user.user}} a mi primera aplicacion <br> en la nube juguemos un juego
-					
-				</h1>
+				{% if user.user %}
+				<h5 class="display-3">
+					Bienvenid@ {{user.user}} a mi primera aplicacion <br> en la nube juguemos un juego {{t}}
+
+				</h5>
 				{% endif %}
 				<br>
 				<div class=" btn-block">
-					<form action="/click_jugar" method="post">
-						<button type="submit" class="btn btn-outline-success btn-block">Jugar</button>
+					<form action="/AddNota" method="post">
+						<input type="text" class="form-control" placeholder="Titulo de la nota" aria-label="Username" aria-describedby="basic-addon1" name="Titulo">
+						<textarea class="form-control" aria-label="With textarea" name="Descripcion"></textarea>
+						<button type="submit" class="btn btn-outline-success btn-block">Agregar</button>
 					</form>
 				</div>
 				<br>
