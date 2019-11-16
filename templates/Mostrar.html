@@ -7,6 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome {{u.Titulo}}</h1>
+    <h1>Welcome </h1>
+    
+    {% for nota in lista %}
+    <p> {{nota.Titulo}} ,  {{nota.Descripcion}}</p>
+    {% endfor %}
+    
+
+
 </body>
 </html>

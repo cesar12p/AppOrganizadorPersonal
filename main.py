@@ -80,7 +80,7 @@ class MainPage(Handler):
                 global userg
                 userg=user
                 template_values={
-                    'user':self.session['user'
+                    'user':self.session['user']
                 }
                 self.render("Bienvenido.html", user=template_values)
             else:
@@ -109,11 +109,11 @@ class Nota(Handler):
         Descripcion = self.request.get('Descripcion')
         newNota=Objeto_Nota(Titulo=Titulo,Descripcion=Descripcion)
         consulta.nota.append(newNota)
-        #consulta.username="2"
         consulta.put()
-        u=consulta.nota[0]
-        
-        self.render("Mostrar.html",u=u)
+        lista = []
+        for i in consulta.nota:
+            lista.append(i)       
+        self.render("Mostrar.html", lista=lista)
 
 class Salir(Handler):
     def get(self):
