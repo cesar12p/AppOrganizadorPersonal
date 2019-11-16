@@ -112,7 +112,8 @@ class Nota(Handler):
         consulta.put()
         lista = []
         for i in consulta.nota:
-            lista.append(i)       
+            lista.append(i)   
+            
         self.render("Mostrar.html", lista=lista)
 
 class Salir(Handler):
@@ -123,6 +124,20 @@ class Salir(Handler):
             fondo="bg-secondary"
             self.render("index.html", error=msg ,fondo=fondo)
             del self.session['user']
+class Editar(Handler):
+    def post(self):
+        InTitulo = self.request.get('InTitulo')
+        InDescripcion = self.request.get('InDescripcion')
+        lista = []
+        for i in consulta.nota:
+            if i.Titulo=="hola":
+                i.Titulo="Nuevo Titulo"
+                consulta.nota.Titulo="Nuevo Titulo"
+                consulta.put()
+                logging.info("info i"+i.Titulo)
+        
+        
+        ##consulta.nota.Titulo.put()
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -133,5 +148,6 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/click_login', MainPage),
                                ('/registrame',Registrar),
                                ('/AddNota',Nota),
-                               ('/salir',Salir)
+                               ('/salir',Salir),
+                               ('/editar',Editar)
                                ], debug=True, config=config)
