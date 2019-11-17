@@ -8,19 +8,16 @@
 </head>
 <body>
     <h1>Welcome </h1>
-    <h1>{{lista}}</h1>
-    {% for nota in lista %}
-    <p>{{nota}}</p>
-    <p> {{nota.Titulo}} ,  {{nota.Descripcion}}</p>
-    {% endfor %}
-    <form action="/editar" method="post">
-        
-    <input type="text" name="InTitulo">
-    <input type="text" name="InDescripcion">
-    <button  type="submit">Editar</button>
-    </form>
     
+    {% for nota in lista%}
+    <form action="/editar" method="post">
 
-
+    <input type="text" value="{{nota.Titulo}}" name="EditTitulo">
+    <input type="text" value="{{nota.Descripcion}}" name="EditDescripcion">
+    
+    <input type="hidden" value="{{nota.Titulo}}" name="idTitulo">
+    <button  type="submit">Save</button>
+    </form>
+    {% endfor %}
 </body>
 </html>

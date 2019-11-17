@@ -1,61 +1,9 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<title>Hello, world!</title>
-</head>
-
-<body class="p-3 mb-2 bg-info text-white">
-	{% if user.user %}
-	<nav class="navbar navbar-light bg-info">
-		<a class="navbar-brand" href="/salir">
-			<img src="/static/img/salir.png" width="30" height="30" alt="">
-		</a>
-	</nav>
-	{% endif %}
-
-	<div class="container">
-		<div class="row">
-			<div class="col-2">
-				<!-- Columna izquierda-->
-			</div>
-			<div class="col-8 text-center alert-dark">
-				{% if user.user %}
-				<h5 class="display-3">
-					Bienvenid@ {{user.user}} a mi primera aplicacion <br> en la nube juguemos un juego {{t}}
-
-				</h5>
-				{% endif %}
-				<br>
-				<div class=" btn-block">
-					<form action="/AddNota" method="post">
-						<input type="text" class="form-control" placeholder="Titulo de la nota" aria-label="Username" aria-describedby="basic-addon1" name="Titulo">
-						<textarea class="form-control" aria-label="With textarea" name="Descripcion"></textarea>
-						<button type="submit" class="btn btn-outline-success btn-block">Agregar</button>
-					</form>
-				</div>
-				<br>
-				<br>
-			</div>
-			<div class="col-2">
-				<!-- Columna izquierda-->
-			</div>
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
-</body>
-
-</html>
+{% extends "_base.html" %}
+{% block bodycontent %}
+	<form action="/AddNota" method="post">
+		<input type="text" class="form-control" placeholder="Titulo de la nota" aria-label="Username"
+			aria-describedby="basic-addon1" name="Titulo">
+		<textarea class="form-control" aria-label="With textarea" name="Descripcion"></textarea>
+		<button type="submit" class="btn btn-outline-success btn-block">Agregar</button>
+	</form>
+{% endblock %}

@@ -7,9 +7,11 @@ import logging
 from google.appengine.ext import ndb
 from webapp2_extras import sessions
 from Crypto.Hash import SHA256
+user=""
 userg=""
 resp = ""
 consulta=""
+lista = []
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
                                autoescape=True)
@@ -59,8 +61,8 @@ class MainPage(Handler):
         self.render("index.html",fondo=fondo, msg=msg)
     def post(self):
         global template_values
-        global nota_values
         global consulta
+        global user
         user = self.request.get('user')
         pw = self.request.get('contra')
         pw=SHA256.new(pw).hexdigest()
@@ -77,8 +79,6 @@ class MainPage(Handler):
                 #Vinculo el usuario obtenido de mi datastore con mi sesion.
                 self.session['user'] = consulta.username
                 logging.info("%s just logged in" % user)
-                global userg
-                userg=user
                 template_values={
                     'user':self.session['user']
                 }
@@ -88,6 +88,11 @@ class MainPage(Handler):
                 fondo="bg-danger"
                 msg = 'El usuario o el password son Incorectos  Intenta de nuevo'
                 self.render("index.html", msg=msg, fondo=fondo)
+class Menu (Handler):
+    def get(self):
+        global template_values
+        self.render("Bienvenido.html",user=template_values)
+
 
 class Registrar(Handler):
     def get(self):
@@ -105,6 +110,7 @@ class Registrar(Handler):
 class Nota(Handler):
     def post(self):
         global consulta
+        global lista
         Titulo = self.request.get('Titulo')
         Descripcion = self.request.get('Descripcion')
         newNota=Objeto_Nota(Titulo=Titulo,Descripcion=Descripcion)
@@ -112,8 +118,7 @@ class Nota(Handler):
         consulta.put()
         lista = []
         for i in consulta.nota:
-            lista.append(i)   
-            
+            lista.append(i) 
         self.render("Mostrar.html", lista=lista)
 
 class Salir(Handler):
@@ -126,15 +131,20 @@ class Salir(Handler):
             del self.session['user']
 class Editar(Handler):
     def post(self):
-        InTitulo = self.request.get('InTitulo')
-        InDescripcion = self.request.get('InDescripcion')
-        lista = []
-        for i in consulta.nota:
-            if i.Titulo=="hola":
-                i.Titulo="Nuevo Titulo"
-                consulta.nota.Titulo="Nuevo Titulo"
+        IdTitulo = self.request.get('idTitulo')
+        EditTitulo=self.request.get('EditTitulo')
+        EditDescrip=self.request.get('EditDescripcion')
+        cont=0
+        for i in lista:
+            if i.Titulo==IdTitulo:
+                consulta.nota[cont].Titulo=EditTitulo
+                consulta.nota[cont].Descripcion=EditDescrip
                 consulta.put()
-                logging.info("info i"+i.Titulo)
+            cont+=1
+        global template_values
+        global lista
+        self.render("Mostrar.html",lista=lista)
+            
         
         
         ##consulta.nota.Titulo.put()
@@ -149,5 +159,6 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/registrame',Registrar),
                                ('/AddNota',Nota),
                                ('/salir',Salir),
-                               ('/editar',Editar)
+                               ('/editar',Editar),
+                               ('/menu',Menu)
                                ], debug=True, config=config)
