@@ -19,7 +19,7 @@ template_values={}
 nota_values={}
 class Objeto_Nota(ndb.Model):
     Titulo = ndb.StringProperty()
-    Descripcion = ndb.StringProperty()
+    Descripcion = ndb.TextProperty()
 class Objeto_Contacto(ndb.Model):
     Nombre = ndb.StringProperty()
     Telefono = ndb.IntegerProperty()
@@ -160,7 +160,24 @@ class AddEvento(Handler):
         consulta.put()
         self.render("Bienvenido.html",user=template_values)
 
-
+class ShowNota(Handler):
+    def get(self):
+        listNotas = []
+        for i in consulta.nota:
+            listNotas.append(i) 
+        self.render("ShowNota.html",user=template_values,list=listNotas)
+class ShowEvento(Handler):
+    def get(self):
+        listEvent = []
+        for i in consulta.evento:
+            listEvent.append(i) 
+        self.render("ShowEvento.html",user=template_values,list=listEvent)
+class ShowContact(Handler):
+    def get(self):
+        listContac = []
+        for i in consulta.contacto:
+            listContac.append(i) 
+        self.render("ShowContacto.html",user=template_values,list=listContac)
 class Nota(Handler):
     def post(self):
         global consulta
@@ -215,6 +232,9 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/addNota',AddNota),
                                ('/addContact',AddContacto),
                                ('/AddNota',Nota),
+                               ('/showNota',ShowNota),
+                               ('/showEvent',ShowEvento),
+                               ('/showContact',ShowContact),
                                ('/salir',Salir),
                                ('/editar',Editar),
                                ('/menu',Menu)
