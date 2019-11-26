@@ -1,0 +1,63 @@
+{% extends "_base.html" %}
+{% block bodycontent %}
+<div class="container">
+        <div class="row ">
+            <div class="col-sm text-center" id="PanelGridIzq">
+                <p id="Titulo">Nuevo Contacto</p>
+                <form action="/addContact" method="POST">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Nombre</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Agrega un Titulo" aria-label="Username"
+                            aria-describedby="basic-addon1" name="Nombre">
+                    </div>
+    
+                    <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Telefono</span>
+                            </div>
+                            <input type="number" class="form-control" placeholder="Agrega un Titulo" aria-label="Username"
+                                aria-describedby="basic-addon1" name="Telefono">
+                        </div>
+
+                        
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Fecha de Nacimiento</span>
+                        </div>
+                        <input type="date" class="form-control" placeholder="Agrega un Titulo" aria-label="Username"
+                            aria-describedby="basic-addon1" name="Fecha">
+                    </div>
+
+                    <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Correo</span>
+                            </div>
+                            <input type="email" class="form-control" placeholder="Agrega un Titulo" aria-label="Username"
+                                aria-describedby="basic-addon1" name="Correo">
+                        </div>
+                    <br>
+    
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary">Guargar</button>
+                </form>
+            </div>
+            <div class="col">
+                <form action="/addNota" method="GET">
+                    <button type="submit" class="btn btn-danger">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <br>
+    <br>
+    </div>
+    
+    </div>
+    
+    </div>
+{% endblock %}

@@ -1,9 +1,41 @@
 {% extends "_base.html" %}
 {% block bodycontent %}
-	<form action="/AddNota" method="post">
-		<input type="text" class="form-control" placeholder="Titulo de la nota" aria-label="Username"
-			aria-describedby="basic-addon1" name="Titulo">
-		<textarea class="form-control" aria-label="With textarea" name="Descripcion"></textarea>
-		<button type="submit" class="btn btn-outline-success btn-block">Agregar</button>
-	</form>
+	
+	<div class="container bg-success">
+		<div class="row">
+		  <div class="col-12 text-center" id="PanelGridSup">
+			<div class="scrollmenu">
+				<a href="#home">Home</a>
+				<a href="#news">News</a>
+				<a href="#contact">Contact</a>
+				<a href="#about">About</a>
+				<a href="#home">Home</a>
+				<a href="#news">News</a>
+				<a href="#contact">Contact</a>
+				<a href="#about">About</a>
+				<a href="#home">Home</a>
+				<a href="#news">News</a>
+				<a href="#contact">Contact</a>
+				<a href="#about">About</a>
+				<a href="#about">Ver mas..</a>
+				...
+			  </div>
+		  </div>
+		  <div class="col-sm text-center" id="PanelGridIzq">
+			Aqui van las notas
+		  </div>
+		  <div class="col-sm text-center" id="PanelGridDer">
+			Aqui van los eventos
+			<form action="/AddNota" method="post">
+				<input type="text" class="form-control" placeholder="Titulo de la nota" aria-label="Username"
+					aria-describedby="basic-addon1" name="Titulo">
+				<textarea class="form-control" aria-label="With textarea" name="Descripcion"></textarea>
+				<button type="submit" class="btn btn-outline-success btn-block">Agregar</button>
+			</form>
+		  </div>
+		</div>
+		<div class="row">
+
+		</div>
+	  </div>
 {% endblock %}

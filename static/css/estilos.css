@@ -9,7 +9,7 @@
 }
 #Titulo{
     font-size:5vw;
-    color: white;
+    color:black;
 }
 #Subtitulo{
     font-size:3vw;
@@ -21,5 +21,31 @@
     background:#7DCEA0  ;
 }
 #fondoPanel{
-    background: rgb(23, 201, 255);
+    background: rgb(149, 165, 166);
 }
+
+#PanelGridSup{
+    background: rgb(65, 131, 215);
+}
+#PanelGridIzq{
+    background:rgb(107, 185, 240);
+}
+#PanelGridDer{
+    background: rgb(107, 185, 240);
+}
+div.scrollmenu {
+    background-color: #333;
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+  div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+  }
+  
+  div.scrollmenu a:hover {
+    background-color: #777;

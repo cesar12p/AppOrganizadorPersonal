@@ -1,0 +1,54 @@
+{% extends "_base.html" %}
+{% block bodycontent %}
+<div class="container">
+    <div class="row ">
+        <div class="col-sm text-center" id="PanelGridIzq">
+            <p id="Titulo">Nuevo Evento</p>
+            <form action="/addEvent" method="POST">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Titulo</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Agrega un Titulo" aria-label="Username"
+                        aria-describedby="basic-addon1" name="Titulo">
+                </div>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Descripcion</span>
+                    </div>
+                    <textarea class="form-control" aria-label="With textarea" placeholder="Agrega una Descripcion"
+                        name="Descripcion"></textarea>
+                </div>
+                <br>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Fecha</span>
+                    </div>
+                    <input type="date" class="form-control" placeholder="Agrega un Titulo" aria-label="Username"
+                        aria-describedby="basic-addon1" name="Fecha">
+                </div>
+                <br>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Guargar</button>
+            </form>
+        </div>
+        <div class="col">
+            <form action="/addNota" method="GET">
+                <button type="submit" class="btn btn-danger">Cancelar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+</div>
+
+</div>
+
+</div>
+{% endblock %}

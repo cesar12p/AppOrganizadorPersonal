@@ -20,11 +20,23 @@ nota_values={}
 class Objeto_Nota(ndb.Model):
     Titulo = ndb.StringProperty()
     Descripcion = ndb.StringProperty()
+class Objeto_Contacto(ndb.Model):
+    Nombre = ndb.StringProperty()
+    Telefono = ndb.IntegerProperty()
+    FechaNaci = ndb.StringProperty()
+    Correo = ndb.StringProperty()
+class Objeto_Evento(ndb.Model):
+    Titulo = ndb.StringProperty()
+    Descripcion = ndb.TextProperty()
+    Fecha = ndb.StringProperty()
+
 class Objeto_Usuario(ndb.Model):
     username = ndb.StringProperty()
     password = ndb.StringProperty()
     email=ndb.StringProperty()
     nota=ndb.StructuredProperty(Objeto_Nota, repeated=True)
+    evento=ndb.StructuredProperty(Objeto_Evento, repeated=True)
+    contacto=ndb.StructuredProperty(Objeto_Contacto, repeated=True)
  
 
 def render_str(template, **params):
@@ -107,6 +119,48 @@ class Registrar(Handler):
         if cuenta_user == cuenta:
             msg = "Registrado"
             self.render("index.html", msg=msg)
+
+class AddNota(Handler):
+    global template_values
+    def get(self):
+        self.render("AddNota.html",user=template_values)
+    def post(self):
+        global consulta
+        Titulo = self.request.get('Titulo')
+        Descripcion = self.request.get('Descripcion')
+        newNota=Objeto_Nota(Titulo=Titulo,Descripcion=Descripcion)
+        consulta.nota.append(newNota)
+        consulta.put()
+        self.render("Bienvenido.html",user=template_values)
+class AddContacto(Handler):
+    global template_values
+    def get(self):
+        self.render("AddContacto.html",user=template_values)
+    def post(self):
+        global consulta
+        Nombre = self.request.get('Nombre')
+        Telefono = self.request.get('Telefono')
+        Fecha = self.request.get('Fecha')
+        Correo = self.request.get('Correo')
+        newContac=Objeto_Contacto(Nombre=Nombre,Telefono=int(Telefono),FechaNaci=Fecha,Correo=Correo)
+        consulta.contacto.append(newContac)
+        consulta.put()
+        self.render("Bienvenido.html",user=template_values)
+class AddEvento(Handler):
+    global template_values
+    def get(self):
+        self.render("AddEvento.html",user=template_values)
+    def post(self):
+        global consulta
+        Titulo = self.request.get('Titulo')
+        Descripcion = self.request.get('Descripcion')
+        Fecha = self.request.get('Fecha')
+        newEvent=Objeto_Evento(Titulo=Titulo,Descripcion=Descripcion,Fecha=Fecha)
+        consulta.evento.append(newEvent)
+        consulta.put()
+        self.render("Bienvenido.html",user=template_values)
+
+
 class Nota(Handler):
     def post(self):
         global consulta
@@ -157,6 +211,9 @@ config['webapp2_extras.sessions'] = {
 app = webapp2.WSGIApplication([('/', MainPage),
                                ('/click_login', MainPage),
                                ('/registrame',Registrar),
+                               ('/addEvent',AddEvento),
+                               ('/addNota',AddNota),
+                               ('/addContact',AddContacto),
                                ('/AddNota',Nota),
                                ('/salir',Salir),
                                ('/editar',Editar),
