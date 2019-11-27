@@ -11,6 +11,9 @@ user=""
 userg=""
 resp = ""
 consulta=""
+listNotas = []
+listContac = []
+listEvent =[]
 lista = []
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
@@ -131,7 +134,8 @@ class AddNota(Handler):
         newNota=Objeto_Nota(Titulo=Titulo,Descripcion=Descripcion)
         consulta.nota.append(newNota)
         consulta.put()
-        self.render("Bienvenido.html",user=template_values)
+        ListaNotas() 
+        self.render("ShowNota.html",user=template_values,list=listNotas)
 class AddContacto(Handler):
     global template_values
     def get(self):
@@ -162,22 +166,67 @@ class AddEvento(Handler):
 
 class ShowNota(Handler):
     def get(self):
-        listNotas = []
-        for i in consulta.nota:
-            listNotas.append(i) 
+        ListaNotas() 
         self.render("ShowNota.html",user=template_values,list=listNotas)
+    def post(self):
+        Titulo = self.request.get('Titulo')
+        Descripcion= self.request.get('Descripcion')
+
+        self.render("EditNota.html",Titulo=Titulo,Descripcion=Descripcion)
+def ListaNotas():
+    global listNotas
+    listNotas = []
+    for i in consulta.nota:
+        listNotas.append(i) 
 class ShowEvento(Handler):
     def get(self):
-        listEvent = []
-        for i in consulta.evento:
-            listEvent.append(i) 
+        ListaEvento()
         self.render("ShowEvento.html",user=template_values,list=listEvent)
+def ListaEvento():
+    global listEvent
+    listEvent = []
+    for i in consulta.evento:
+        listEvent.append(i) 
+
 class ShowContact(Handler):
     def get(self):
-        listContac = []
-        for i in consulta.contacto:
-            listContac.append(i) 
+        ListaContacto()
         self.render("ShowContacto.html",user=template_values,list=listContac)
+def ListaContacto():
+    global listContac
+    listContac = []
+    for i in consulta.contacto:
+        listContac.append(i)
+class EditNota(Handler):
+    def get(self):
+        global consulta
+        IdTitulo = self.request.get('IdTitulo')
+        cont=0
+        for i in listNotas:
+            if i.Titulo==IdTitulo:
+                consulta.nota.pop(cont)
+                consulta.put()
+                break
+            cont+=1
+        ListaNotas()
+        self.render("ShowNota.html",user=template_values,list=listNotas)
+    def post(self):
+        global consulta
+        IdTitulo = self.request.get('IdTitulo')
+        EditTitulo=self.request.get('EditTitulo')
+        EditDescrip=self.request.get('EditDescripcion')
+        logging.info('ENTRO AL EDITAR')
+        cont=0
+        for i in listNotas:
+            if i.Titulo==IdTitulo:
+                consulta.nota[cont].Titulo=EditTitulo
+                consulta.nota[cont].Descripcion=EditDescrip
+                consulta.put()
+                break
+            cont+=1
+        ListaNotas()
+        self.render("ShowNota.html",user=template_values,list=listNotas)
+
 class Nota(Handler):
     def post(self):
         global consulta
@@ -235,6 +284,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/showNota',ShowNota),
                                ('/showEvent',ShowEvento),
                                ('/showContact',ShowContact),
+                               ('/editNota',EditNota),
                                ('/salir',Salir),
                                ('/editar',Editar),
                                ('/menu',Menu)

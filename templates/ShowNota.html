@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row ">
             <div class="col-sm text-center" >
-                <form action="/addNota" method="POST">
+                <form action="/showNota" method="POST">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Titulo</span>
@@ -38,7 +38,8 @@
                 </form>
             </div>
             <div class="col">
-                <form action="/addNota" method="GET">
+                <form action="/editNota" method="GET">
+                    <input type="hidden" name="IdTitulo" value="{{nota.Titulo}}">
                     <button type="submit" class="btn btn-danger">Borrar</button>
                 </form>
             </div>
