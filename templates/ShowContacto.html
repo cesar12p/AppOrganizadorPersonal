@@ -15,7 +15,7 @@
         <div class="row ">
             <div class="col-sm text-center">
                 
-                <form action="/addContact" method="POST">
+                <form action="/showContact" method="POST">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Nombre</span>
@@ -55,7 +55,8 @@
                 </form>
             </div>
             <div class="col">
-                <form action="/addNota" method="GET">
+                <form action="/editContact" method="GET">
+                    <input type="hidden" name="IdNombre" value="{{contacto.Nombre}}">
                     <button type="submit" class="btn btn-danger">Borrar</button>
                 </form>
             </div>

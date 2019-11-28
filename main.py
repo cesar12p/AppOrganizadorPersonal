@@ -182,6 +182,11 @@ class ShowEvento(Handler):
     def get(self):
         ListaEvento()
         self.render("ShowEvento.html",user=template_values,list=listEvent)
+    def post(self):
+        Titulo = self.request.get('Titulo')
+        Descripcion= self.request.get('Descripcion')
+        Fecha = self.request.get('Fecha')
+        self.render("EditEvento.html",Titulo=Titulo,Descripcion=Descripcion, Fecha=Fecha)
 def ListaEvento():
     global listEvent
     listEvent = []
@@ -192,6 +197,12 @@ class ShowContact(Handler):
     def get(self):
         ListaContacto()
         self.render("ShowContacto.html",user=template_values,list=listContac)
+    def post(self):
+        Nombre = self.request.get('Nombre')
+        Telefono = self.request.get('Telefono')
+        Fecha= self.request.get('Fecha')
+        Correo=self.request.get('Correo')
+        self.render("EditContacto.html",user=template_values,Nombre=Nombre,Telefono=Telefono,Fecha=Fecha,Correo=Correo)
 def ListaContacto():
     global listContac
     listContac = []
@@ -226,7 +237,68 @@ class EditNota(Handler):
             cont+=1
         ListaNotas()
         self.render("ShowNota.html",user=template_values,list=listNotas)
-
+class EditarEvento(Handler):
+    def get(self):
+        global consulta
+        IdTitulo = self.request.get('IdTitulo')
+        cont=0
+        for i in listEvent:
+            if i.Titulo==IdTitulo:
+                consulta.evento.pop(cont)
+                consulta.put()
+                break
+            cont+=1
+        ListaEvento()
+        self.render("ShowEvento.html",user=template_values,list=listEvent)
+    def post(self):
+        global consulta
+        IdTitulo= self.request.get('IdTitulo')
+        EditTitulo=self.request.get('EditTitulo')
+        EditDescrip=self.request.get('EditDescripcion')
+        EditFecha=self.request.get('EditFecha')
+        cont=0
+        for i in listEvent:
+            if i.Titulo==IdTitulo:
+                consulta.evento[cont].Titulo=EditTitulo
+                consulta.evento[cont].Descripcion=EditDescrip
+                consulta.evento[cont].Fecha=EditFecha
+                consulta.put()
+                break
+            cont+=1
+        ListaEvento()
+        self.render("ShowEvento.html",user=template_values,list=listEvent)
+class EditarContacto(Handler):
+    def get(self):
+        global consulta
+        IdNombre = self.request.get('IdNombre')
+        cont = 0
+        for i in listContac:
+            if i.Nombre==IdNombre:
+                consulta.contacto.pop(cont)
+                consulta.put()
+                break
+            cont+=1
+        ListaContacto()
+        self.render("ShowContacto.html",user=template_values,list=listContac)
+    def post(self):
+        global consulta
+        IdNombre=self.request.get('IdNombre')
+        EditNombre=self.request.get('EditNombre')
+        EditTelefono=self.request.get('EditTelefono')
+        EditFecha=self.request.get('EditFecha')
+        EditCorreo=self.request.get('EditCorreo')
+        cont=0
+        for i in listContac:
+            if i.Nombre==IdNombre:
+                consulta.contacto[cont].Nombre=EditNombre
+                consulta.contacto[cont].Telefono=int(EditTelefono)
+                consulta.contacto[cont].FechaNaci=EditFecha
+                consulta.contacto[cont].Correo=EditCorreo
+                consulta.put()
+                break
+            cont+=1
+        ListaContacto()
+        self.render("ShowContacto.html",user=template_values,list=listContac)
 class Nota(Handler):
     def post(self):
         global consulta
@@ -285,6 +357,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/showEvent',ShowEvento),
                                ('/showContact',ShowContact),
                                ('/editNota',EditNota),
+                               ('/editEvent',EditarEvento),
+                               ('/editContact',EditarContacto),
                                ('/salir',Salir),
                                ('/editar',Editar),
                                ('/menu',Menu)
