@@ -243,7 +243,7 @@ class EditarEvento(Handler):
         IdTitulo = self.request.get('IdTitulo')
         cont=0
         for i in listEvent:
-            if i.Titulo==IdTitulo:
+            if i.Titulo==IdTitulo :
                 consulta.evento.pop(cont)
                 consulta.put()
                 break

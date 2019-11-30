@@ -20,9 +20,7 @@
 #fondo{
     background:#7DCEA0  ;
 }
-#fondoPanel{
-    background: rgb(149, 165, 166);
-}
+
 
 #PanelGridSup{
     background: rgb(65, 131, 215);
@@ -49,3 +47,32 @@ div.scrollmenu {
   
   div.scrollmenu a:hover {
     background-color: #777;
+  }
+
+@media screen and (min-width: 400px){
+    #icon{
+        width: 100%;
+        height: auto;
+}
+#fondoPanel{
+    background: rgb(0, 235, 252);
+}
+}
+@media screen and (min-width: 767px){
+    #icon{
+        width: 45%;
+        height: auto;
+}
+#fondoPanel{
+    background: rgb(252, 5, 239);
+}
+}
+@media screen and (min-width: 950px){
+    #icon{
+        width: 42%;
+        height: auto;
+}
+#fondoPanel{
+    background: rgb(241, 226, 6);
+}
+}

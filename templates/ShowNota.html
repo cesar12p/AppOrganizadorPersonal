@@ -1,54 +1,64 @@
 {% extends "_base.html" %}
 {% block bodycontent %}
-<div class="container" id="fondo" >
+<div class="container" id="fondo">
     <table class="table table-striped table-primary">
-            <thead>
-                    <tr>
-                      <th class="text-center" scope="col">Tareas</th>
-                    </tr>
-                  </thead>
-            <tbody>
-    {% for nota in list%}
-    <tr>
-        <td>
-    <div class="container">
-        <div class="row ">
-            <div class="col-sm text-center" >
-                <form action="/showNota" method="POST">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Titulo</span>
-                        </div>
-                        <input type="text" class="form-control" value="{{nota.Titulo}}" aria-label="Username"
-                            aria-describedby="basic-addon1" name="Titulo" readonly>
-
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Descripcion</span>
-                        </div>
-                        <textarea class="form-control" aria-label="With textarea" name="Descripcion"
-                            value="{{nota.Descripcion}}" readonly>{{nota.Descripcion}}</textarea>
-                    </div>
-                    <br>
+        <thead>
+            <tr>
+                <th class="text-center" scope="col">Tareas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for nota in list%}
+            <tr>
+                <td>
                     <div class="container">
                         <div class="row">
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary">Editar</button>
-                </form>
-            </div>
-            <div class="col">
-                <form action="/editNota" method="GET">
-                    <input type="hidden" name="IdTitulo" value="{{nota.Titulo}}">
-                    <button type="submit" class="btn btn-danger">Borrar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-    {% endfor %}
-</tbody>
-</table>
+                            <div class="col-10">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">Titulo</span>
+                                            </div>
+                                            <input type="text" class="form-control" value="{{nota.Titulo}}"
+                                                aria-label="Username" aria-describedby="basic-addon1" readonly>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Descripcion</span>
+                                            </div>
+                                            <textarea type="hidden" class="form-control" aria-label="With textarea"
+                                                readonly>{{nota.Descripcion}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-2">
+                                <form action="/showNota" method="POST">
+                                
+                                <input type="hidden" value="{{nota.Titulo}}" name="Titulo">
+                                <input type="hidden" value="{{nota.Descripcion}}" name="Descripcion">
+                                <input type="image" src="/static/img/e.png" id="icon">
+                                </form>
+                                <form action="/editNota" method="GET">
+                                    <input type="hidden" value="{{nota.Titulo}}" name="IdTitulo">
+                                    <input type="image" src="/static/img/delete.png" id="icon">
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 </div>
 {% endblock %}
