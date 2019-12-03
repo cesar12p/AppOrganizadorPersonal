@@ -47,7 +47,8 @@ div.scrollmenu {
   
   div.scrollmenu a:hover {
     background-color: #777;
-  }
+}
+
 
 @media screen and (min-width: 400px){
     #icon{
@@ -56,6 +57,10 @@ div.scrollmenu {
 }
 #fondoPanel{
     background: rgb(0, 235, 252);
+}
+#scrollPanel{
+    height: 350px;
+    overflow-y: scroll;
 }
 }
 @media screen and (min-width: 767px){
@@ -66,6 +71,10 @@ div.scrollmenu {
 #fondoPanel{
     background: rgb(252, 5, 239);
 }
+#scrollPanel{
+    height: 600px;
+    overflow-y: scroll;
+}
 }
 @media screen and (min-width: 950px){
     #icon{
@@ -74,5 +83,9 @@ div.scrollmenu {
 }
 #fondoPanel{
     background: rgb(241, 226, 6);
+}
+#scrollPanel{
+    height: 500px;
+    overflow-y: scroll;
 }
 }

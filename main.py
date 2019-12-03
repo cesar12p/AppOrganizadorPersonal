@@ -4,6 +4,7 @@ import os
 import jinja2
 import random
 import logging
+import datetime
 from google.appengine.ext import ndb
 from webapp2_extras import sessions
 from Crypto.Hash import SHA256
@@ -97,7 +98,11 @@ class MainPage(Handler):
                 template_values={
                     'user':self.session['user']
                 }
-                self.render("Bienvenido.html", user=template_values)
+                ListaContacto()
+                ListaNotas()
+                ListaEvento()
+                listEvent.sort()
+                self.render("Bienvenido.html", user=template_values,listContac=listContac,listNotas=listNotas,listEvent=listEvent)
             else:
                 logging.info('POST consulta=' + str(consulta))
                 fondo="bg-danger"
@@ -106,7 +111,12 @@ class MainPage(Handler):
 class Menu (Handler):
     def get(self):
         global template_values
-        self.render("Bienvenido.html",user=template_values)
+        ListaContacto()
+        ListaNotas()
+        ListaEvento()
+        listEvent.sort('Fecha')
+        self.render("Bienvenido.html", user=template_values,listContac=listContac,listNotas=listNotas,listEvent=listEvent)
+        
 
 
 class Registrar(Handler):
@@ -149,7 +159,8 @@ class AddContacto(Handler):
         newContac=Objeto_Contacto(Nombre=Nombre,Telefono=int(Telefono),FechaNaci=Fecha,Correo=Correo)
         consulta.contacto.append(newContac)
         consulta.put()
-        self.render("Bienvenido.html",user=template_values)
+        ListaContacto()
+        self.render("ShowContacto.html",user=template_values,list=listContac)
 class AddEvento(Handler):
     global template_values
     def get(self):
@@ -162,7 +173,8 @@ class AddEvento(Handler):
         newEvent=Objeto_Evento(Titulo=Titulo,Descripcion=Descripcion,Fecha=Fecha)
         consulta.evento.append(newEvent)
         consulta.put()
-        self.render("Bienvenido.html",user=template_values)
+        ListaEvento()
+        self.render("ShowEvento.html",user=template_values,list=listEvent )
 
 class ShowNota(Handler):
     def get(self):
@@ -195,7 +207,9 @@ def ListaEvento():
 
 class ShowContact(Handler):
     def get(self):
+        Id=self.request.get('Id')
         ListaContacto()
+        logging.info("MENSAJE: "+Id)
         self.render("ShowContacto.html",user=template_values,list=listContac)
     def post(self):
         Nombre = self.request.get('Nombre')
